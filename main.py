@@ -4,11 +4,11 @@ import json
 import logging
 import time
 import urllib3
-
+import os
+parent_dir = os.path.dirname(os.path.abspath(__file__))
 
 from MyUtil import MyUtil
 from Strategy import Strategy
-from TRADE_DAY import TRADE_DAY
 urllib3.disable_warnings()
 from datetime import datetime, timedelta, timezone
 from dateutil import tz
@@ -18,9 +18,12 @@ now = datetime.now(tz=time_zone)
 import schedule
 
 def load_yaml(config_file):
+    abs_path = parent_dir + '/' + config_file;
+    print('config file path:' + abs_path)
     try:
-        with open(config_file, 'r') as f:
+        with open(abs_path, 'r') as f:
             config=yaml.safe_load(f)
+            print("load config :" + str(config))
             return config
     except Exception as e:
         print(str(e))
@@ -126,7 +129,10 @@ def job():
     res = stg.创业板1进2()
     if not(res is None):
         fsb.send_notification("创业板1进2",res)
-    
+
+    res2 = stg.主板1进2()
+    if not(res2 is None):
+        fsb.send_notification('主板1进2', res)
 
     
 if __name__ == "__main__":
@@ -135,7 +141,7 @@ if __name__ == "__main__":
     # schedule.every(10).seconds.do(job)
     # schedule.every(0.25).minutes.do(job)
     # schedule.every().hour.do(job)
-    # config = load_yaml('./config.yaml')
+    config = load_yaml('config.yaml')
     print("程序开始运行")
     schedule.every().day.at('09:25:10').do(job)
     # schedule.every().monday.do(job)
