@@ -12,11 +12,13 @@ class Strategy(object):
     def 创业板1进2(self):
         trade = self.trade
         cur = MyUtil.now().strftime('%Y-%m-%d')
+        # cur = '2023-10-27'
         yes = trade.get_last_trading_day(cur)
         cmd = '创业板，'+yes+'首板涨停，'+cur+'集合竞价成交量除以自由流通股大于0.019，'+cur+'竞价涨跌幅，非st'
         print('[创业板1进2]: ' + cmd)
         res = pywencai.get(query=cmd, sort_order='asc', loop=True, sleep=0.1)
         if res is None:
+            print('[创业板1进2]数据源为空')
             return
         # print(res.columns)
         cur_str = datetime.strptime(cur, "%Y-%m-%d").strftime('%Y%m%d') 
@@ -41,12 +43,15 @@ class Strategy(object):
     def 主板1进2(self):
         trade = self.trade
         cur = MyUtil.now().strftime('%Y-%m-%d')
+        # cur = '2023-10-27'
         yes = trade.get_last_trading_day(cur)
         cmd = yes + '首板涨停，'+ cur +'集合竞价成交量除以自由流通股大于0.01，竞价涨跌幅大于0，'+yes+'自由流通市值，非st非创业板非科创板'
-        print(cmd)
+        # print(cmd)
         res = pywencai.get(query=cmd, sort_order='asc', loop=True, sleep=0.1)
         if res is None:
+            print('[主板1进2]数据源为空')
             return
+        # 
         # print(res.columns)
         cur_str = datetime.strptime(cur, "%Y-%m-%d").strftime('%Y%m%d') 
         yes_str = datetime.strptime(yes, "%Y-%m-%d").strftime('%Y%m%d') 
@@ -73,5 +78,6 @@ if __name__ == "__main__":
     stg = Strategy()
     # res = stg.创业板1进2()
     res = stg.主板1进2()
-    print(res)
+    print(res) 
+    # cmd = '创业板，2023-10-26首板涨停，2023-10-27集合竞价成交量除以自由流通股大于0.019，2023-10-27竞价涨跌幅，非st'
     pass

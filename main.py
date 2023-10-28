@@ -10,11 +10,6 @@ parent_dir = os.path.dirname(os.path.abspath(__file__))
 from MyUtil import MyUtil
 from Strategy import Strategy
 urllib3.disable_warnings()
-from datetime import datetime, timedelta, timezone
-from dateutil import tz
-time_zone = tz.gettz('Asia/Shanghai')
-now = datetime.now(tz=time_zone)
-
 import schedule
 
 def load_yaml(config_file):
@@ -95,7 +90,7 @@ class FeiShuBot(object):
     # -----------------public function-----------------
     def send_notification(self,title,message):
         # 打印按指定格式排版的时间
-        current_time = now.strftime('%Y-%m-%d %H:%M:%S')
+        current_time = MyUtil.now().strftime('%Y-%m-%d %H:%M:%S')
         print(current_time)
         report_content=[
             [   {"tag": "text", "text": "当前时间: {}".format(current_time)} ],
@@ -118,10 +113,10 @@ class FeiShuBot(object):
 fsb = FeiShuBot()
 def job():
     fsb.send_notification("⏰ 正在执行自动化任务 ⏰","程序正在运行，持续为您服务")
-    current_time = now.strftime('%Y-%m-%d %H:%M:%S')
+    current_time = MyUtil.now().strftime('%Y-%m-%d %H:%M:%S')
     print(current_time +"  I'm working...")
     # 执行策略， 生成消息
-    if not(MyUtil.isTradeDay(now)):
+    if not(MyUtil.isTradeDay(MyUtil.now())):
         fsb.send_notification("温馨提示","非交易时段，好好享受生活吧 ~ ")
         return
     
