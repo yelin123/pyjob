@@ -127,7 +127,7 @@ def job():
 
     res2 = stg.主板1进2()
     if not(res2 is None):
-        fsb.send_notification('主板1进2', res)
+        fsb.send_notification('主板1进2', res2)
 
     
 if __name__ == "__main__":
