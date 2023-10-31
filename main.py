@@ -139,6 +139,10 @@ if __name__ == "__main__":
     config = load_yaml('config.yaml')
     print("程序开始运行")
     schedule.every().day.at('09:25:10').do(job)
+    schedule.every().day.at('09:26:10').do(job)
+    schedule.every().day.at('09:27:10').do(job)
+    schedule.every().day.at('09:28:10').do(job)
+    schedule.every().day.at('09:29:10').do(job)
     # schedule.every().monday.do(job)
     # schedule.every().wednesday.at("13:15").do(job)
     
