@@ -2,6 +2,7 @@ import chinese_calendar
 import datetime
 import pandas as pd
 import akshare as ak
+from MyUtil import MyUtil
         
 class TRADE_DAY(object):
     def __init__(self):
@@ -10,11 +11,15 @@ class TRADE_DAY(object):
         et: str,终止日期,格式如'2023-03-01'
         data:转换后的交易日数据源
         '''
-        trade_date = ak.tool_trade_date_hist_sina()
+        # print('4')
+        # print(self.get_tradeday('2010-01-01', MyUtil.now().strftime("%Y-%m-%d")))
+        #trade_date = ak.tool_trade_date_hist_sina()
         # 对初始的数据进行清洗转换,此处可依据获取的数据源进行自主转换
         # 转换后的数据格式为DataFrame,只有一列,列名为date,值的格式为str,例如'2023-03-03'
-        new_df = pd.DataFrame({'date': trade_date['trade_date']})
-        new_df['date'] = new_df['date'].apply(lambda x: pd.to_datetime(str(x)).strftime("%Y-%m-%d"))
+        #new_df = pd.DataFrame({'date': trade_date['trade_date']})
+        #new_df['date'] = new_df['date'].apply(lambda x: pd.to_datetime(str(x)).strftime("%Y-%m-%d"))
+        #print(new_df)
+        new_df = pd.DataFrame(self.get_tradeday('2010-01-01', MyUtil.now().strftime("%Y-%m-%d")), columns=['date'])
         self.data = new_df
 
     @staticmethod
