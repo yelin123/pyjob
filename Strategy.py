@@ -35,7 +35,7 @@ class Strategy(object):
             text += '---------------------\n'
             text += '股票名称: '+ row[1] + ' ('+row[0]+')\n'
             text += '实际换手: '+ str('%.2f'%(row[3]*100)) + '% '+ ('[抢筹]' if row[3]>=0.02 else '') +'\n'
-            text += '竞价涨幅: ' + str(row[2]) + '%\n'
+            text += '竞价涨幅: ' + str('%.2f'% row[2]) + '%\n'
             text += '流通市值: ' + str('%.2f'%(row[4]/(100000000))) + '亿\n'
         return text
 
@@ -65,10 +65,14 @@ class Strategy(object):
             text += '---------------------\n'
             text += '股票名称: '+ row[1] + ' ('+row[0]+')\n'
             text += '实际换手: '+ str('%.2f'%(row[3]*100)) + '% '+ ('[抢筹]' if row[3]>=0.02 else '') +'\n'
-            text += '竞价涨幅: ' + str(row[2]) + '%\n'
+            text += '竞价涨幅: ' + str('%.2f' % row[2]) + '%\n'
             text += '流通市值: ' + str('%.2f'%(row[4]/(100000000))) + '亿\n'
         return text  
     
+    # 连板高标
+    def 连板高标(self):
+        pass
+
 if __name__ == "__main__":
     # i = 0.0026189940306016197
     # print(str('%.2f'%(i*100)))
