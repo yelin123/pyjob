@@ -112,26 +112,31 @@ class FeiShuBot(object):
 
 fsb = FeiShuBot()
 def job():
-    fsb.send_notification("⏰ 正在执行自动化任务 ⏰","程序正在运行，持续为您服务")
-    current_time = MyUtil.now().strftime('%Y-%m-%d %H:%M:%S')
-    print(current_time +"  I'm working...")
-    # 执行策略， 生成消息
-    if not(MyUtil.isTradeDay(MyUtil.now())):
-        fsb.send_notification("温馨提示","非交易时段，好好享受生活吧 ~ ")
-        return
+    try:    
+        fsb.send_notification("⏰ 正在执行自动化任务 ⏰","程序正在运行，持续为您服务")
+        current_time = MyUtil.now().strftime('%Y-%m-%d %H:%M:%S')
+        print(current_time +"  I'm working...")
+        # 执行策略， 生成消息
+        if not(MyUtil.isTradeDay(MyUtil.now())):
+            fsb.send_notification("温馨提示","非交易时段，好好享受生活吧 ~ ")
+            return
+        
+        stg = Strategy()
+        res = stg.创业板1进2()
+        if not(res is None):
+            fsb.send_notification("创业板1进2",res)
+
+        res2 = stg.主板1进2()
+        if not(res2 is None):
+            fsb.send_notification('主板1进2', res2)
+
+        res3 = stg.连板高标()
+        if not(res3 is None):
+            fsb.send_notification('连板高标', res3)
+    except Exception as e:
+        fsb.send_notification("💀 程序执行异常 💀",e)
+
     
-    stg = Strategy()
-    res = stg.创业板1进2()
-    if not(res is None):
-        fsb.send_notification("创业板1进2",res)
-
-    res2 = stg.主板1进2()
-    if not(res2 is None):
-        fsb.send_notification('主板1进2', res2)
-
-    res3 = stg.连板高标()
-    if not(res3 is None):
-        fsb.send_notification('连板高标', res3)
 
     
 if __name__ == "__main__":
