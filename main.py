@@ -147,8 +147,7 @@ if __name__ == "__main__":
     # schedule.every().hour.do(job)
     config = load_yaml('config.yaml')
     print("程序开始运行")
-    schedule.every().day.at('09:27:40').do(job)
-    schedule.every().day.at('09:29:00').do(job)
+    schedule.every().day.at('09:28:00').do(job)
 
     # schedule.every().monday.do(job)
     # schedule.every().wednesday.at("13:15").do(job)

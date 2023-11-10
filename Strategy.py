@@ -82,17 +82,18 @@ class Strategy(object):
             print('[连板高标]数据源为空')
             return
         # 
-        # print(res.columns)
+        print(res.columns)
         cur_str = datetime.strptime(cur, "%Y-%m-%d").strftime('%Y%m%d') 
         yes_str = datetime.strptime(yes, "%Y-%m-%d").strftime('%Y%m%d') 
-        data = res.loc[:, ['股票代码', '股票简称','分时涨跌幅:前复权['+cur_str+' 09:25]', '{(}竞价量['+cur_str+']{/}自由流通股['+cur_str+']{)}','自由流通市值['+yes_str+']']]
-        data.columns = ["股票代码", "股票简称",'竞价涨幅','实际换手','流通市值']  # 重新命名
+        data = res.loc[:, ['股票代码', '股票简称','分时涨跌幅:前复权['+cur_str+' 09:25]', '{(}竞价量['+cur_str+']{/}自由流通股['+cur_str+']{)}','自由流通市值['+yes_str+']', '连续涨停天数['+ yes_str +']']]
+        data.columns = ["股票代码", "股票简称",'竞价涨幅','实际换手','流通市值','连板数']  # 重新命名
 
         # 格式化输出
         text = ''
         for index, row in data.iterrows():
             text += '---------------------\n'
             text += '股票名称: '+ row[1] + ' ('+row[0]+')\n'
+            text += '连板晋级: '+ str(row[5]) +'进'+ str(row[5]+1) +'\n'
             text += '实际换手: '+ str('%.2f'%(row[3]*100)) + '% '+ ('[量不够]' if row[3]<=0.03 else '') +'\n'
             text += '竞价涨幅: ' + str('%.2f'%float(row[2])) + '%\n'
             text += '流通市值: ' + str('%.2f'%(row[4]/(100000000))) + '亿\n'
@@ -102,8 +103,8 @@ if __name__ == "__main__":
     stg = Strategy()
     print('运行')
     #res = stg.创业板1进2()
-    # res = stg.连板高标()
-    res = stg.主板1进2()
+    res = stg.连板高标()
+    # res = stg.主板1进2()
     print(res) 
     # cmd = '创业板，2023-10-26首板涨停，2023-10-27集合竞价成交量除以自由流通股大于0.019，2023-10-27竞价涨跌幅，非st'
     # i = 0.0026189940306016197
