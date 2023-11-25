@@ -111,6 +111,7 @@ class FeiShuBot(object):
         })
 
 fsb = FeiShuBot()
+stg = Strategy()
 def job():
     try:    
         fsb.send_notification("⏰ 正在执行自动化任务 ⏰","程序正在运行，持续为您服务")
@@ -120,8 +121,6 @@ def job():
         if not(MyUtil.isTradeDay(MyUtil.now())):
             fsb.send_notification("温馨提示","非交易时段，好好享受生活吧 ~ ")
             return
-        
-        stg = Strategy()
         res = stg.创业板1进2()
         if not(res is None):
             fsb.send_notification("创业板1进2",res)
@@ -136,11 +135,25 @@ def job():
     except Exception as e:
         fsb.send_notification("💀 程序执行异常 💀",e)
 
-    
+#选股程序
+def selectionJob():
+    try:    
+        fsb.send_notification("⏰ 正在执行选股任务 ⏰","程序正在运行，持续为您服务")
+        current_time = MyUtil.now().strftime('%Y-%m-%d %H:%M:%S')
+        print(current_time +"  I'm working...")
+        # 执行策略， 生成消息
+        if not(MyUtil.isTradeDay(MyUtil.now())):
+            fsb.send_notification("温馨提示","非交易时段，好好享受生活吧 ~ ")
+            return
+        res = stg.创业板振幅选股()
+        if not(res is None):
+            fsb.send_notification("创业板振幅选股",res)
+    except Exception as e:
+        fsb.send_notification("💀 选股程序执行异常 💀",e)
 
     
 if __name__ == "__main__":
-
+    selectionJob()
     # schedule.every(5).seconds.do(job)
     # schedule.every(10).seconds.do(job)
     # schedule.every(0.25).minutes.do(job)
@@ -148,6 +161,7 @@ if __name__ == "__main__":
     config = load_yaml('config.yaml')
     print("程序开始运行")
     schedule.every().day.at('09:28:00').do(job)
+    schedule.every().day.at('14:56:00').do(selectionJob)
 
     # schedule.every().monday.do(job)
     # schedule.every().wednesday.at("13:15").do(job)
