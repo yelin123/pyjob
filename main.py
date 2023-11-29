@@ -111,12 +111,12 @@ class FeiShuBot(object):
         })
 
 fsb = FeiShuBot()
-stg = Strategy()
 def job():
     try:    
         fsb.send_notification("⏰ 正在执行自动化任务 ⏰","程序正在运行，持续为您服务")
         current_time = MyUtil.now().strftime('%Y-%m-%d %H:%M:%S')
         print(current_time +"  I'm working...")
+        stg = Strategy()
         # 执行策略， 生成消息
         if not(MyUtil.isTradeDay(MyUtil.now())):
             fsb.send_notification("温馨提示","非交易时段，好好享受生活吧 ~ ")
@@ -142,6 +142,7 @@ def selectionJob():
         current_time = MyUtil.now().strftime('%Y-%m-%d %H:%M:%S')
         print(current_time +"  I'm working...")
         # 执行策略， 生成消息
+        stg = Strategy()
         if not(MyUtil.isTradeDay(MyUtil.now())):
             fsb.send_notification("温馨提示","非交易时段，好好享受生活吧 ~ ")
             return

@@ -73,7 +73,6 @@ class Strategy(object):
     def 连板高标(self):
         trade = self.trade
         cur = MyUtil.now().strftime('%Y-%m-%d')
-        # cur = '2023-10-27'
         yes = trade.get_last_trading_day(cur)
         cmd = yes + '连续涨停天数大于1，'+ cur +'集合竞价成交量除以自由流通股大于0，竞价分时涨跌幅大于-11，'+yes+'自由流通市值，连续涨停天数排序，非st非创业板非科创板'
         print(cmd)
@@ -81,8 +80,7 @@ class Strategy(object):
         if res is None:
             print('[连板高标]数据源为空')
             return
-        # 
-        print(res.columns)
+        # print(res.columns)
         cur_str = datetime.strptime(cur, "%Y-%m-%d").strftime('%Y%m%d') 
         yes_str = datetime.strptime(yes, "%Y-%m-%d").strftime('%Y%m%d') 
         data = res.loc[:, ['股票代码', '股票简称','分时涨跌幅:前复权['+cur_str+' 09:25]', '{(}竞价量['+cur_str+']{/}自由流通股['+cur_str+']{)}','自由流通市值['+yes_str+']', '连续涨停天数['+ yes_str +']']]
@@ -107,7 +105,6 @@ class Strategy(object):
         cur = MyUtil.now().strftime('%Y-%m-%d')
         if not(MyUtil.isTradeDay(MyUtil.now())):
             cur = trade.get_last_trading_day(cur)
-        cur = '2023-11-22'
         yes = trade.get_last_trading_day(cur)
         bfyes = trade.get_last_trading_day(yes)
         #  创业板，2023-11-22至2023-11-24振幅达到29%，2023-11-22至2023-11-24的曾涨停次数大于0或者涨停次数大于0，2023-11-24收红盘，按照2023-11-22至2023-11-24振幅排序
