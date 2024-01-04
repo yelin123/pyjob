@@ -1,7 +1,6 @@
 import chinese_calendar
 import datetime
 import pandas as pd
-import akshare as ak
 from MyUtil import MyUtil
         
 class TRADE_DAY(object):
