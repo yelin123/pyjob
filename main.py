@@ -154,7 +154,8 @@ def selectionJob():
 
     
 if __name__ == "__main__":
-    # selectionJob()
+    job()
+    selectionJob()
     # schedule.every(5).seconds.do(job)
     # schedule.every(10).seconds.do(job)
     # schedule.every(0.25).minutes.do(job)
