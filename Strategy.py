@@ -43,16 +43,16 @@ class Strategy(object):
     def 主板1进2(self):
         trade = self.trade
         cur = MyUtil.now().strftime('%Y-%m-%d')
-        # cur = '2023-10-27'
+        # cur = '2024-01-10'
         yes = trade.get_last_trading_day(cur)
-        cmd = yes + '首板涨停，'+ cur +'集合竞价成交量除以自由流通股大于0.01，竞价涨跌幅大于0，'+yes+'自由流通市值，非st非创业板非科创板'
+        cmd = yes + '首板涨停，'+ cur +'集合竞价成交量除以自由流通股大于0.01，'+cur+'竞价涨跌幅大于等于0，'+yes+'自由流通市值，非st非创业板非科创板'
         print(cmd)
         res = pywencai.get(query=cmd, sort_order='asc', loop=True, sleep=0.1)
         if res is None:
             print('[主板1进2]数据源为空')
             return
         # 
-        # print(res.columns)
+        print(res.columns)
         cur_str = datetime.strptime(cur, "%Y-%m-%d").strftime('%Y%m%d') 
         yes_str = datetime.strptime(yes, "%Y-%m-%d").strftime('%Y%m%d') 
         data = res.loc[:, ['股票代码', '股票简称','分时涨跌幅:前复权['+cur_str+' 09:25]', '{(}竞价量['+cur_str+']{/}自由流通股['+cur_str+']{)}','自由流通市值['+yes_str+']']]
@@ -131,8 +131,8 @@ if __name__ == "__main__":
     stg = Strategy()
     print('运行')
     #res = stg.创业板1进2()
-    res = stg.创业板振幅选股()
-    # res = stg.主板1进2()
+    #res = stg.创业板振幅选股()
+    res = stg.主板1进2()
     print(res) 
     # cmd = '创业板，2023-10-26首板涨停，2023-10-27集合竞价成交量除以自由流通股大于0.019，2023-10-27竞价涨跌幅，非st'
     # i = 0.0026189940306016197
