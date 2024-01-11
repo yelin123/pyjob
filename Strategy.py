@@ -55,7 +55,8 @@ class Strategy(object):
         print(res.columns)
         cur_str = datetime.strptime(cur, "%Y-%m-%d").strftime('%Y%m%d') 
         yes_str = datetime.strptime(yes, "%Y-%m-%d").strftime('%Y%m%d') 
-        data = res.loc[:, ['股票代码', '股票简称','分时涨跌幅:前复权['+cur_str+' 09:25]', '{(}竞价量['+cur_str+']{/}自由流通股['+cur_str+']{)}','自由流通市值['+yes_str+']']]
+        竞价涨幅 = '分时涨跌幅:前复权['+cur_str+' 09:25]' if '分时涨跌幅:前复权['+cur_str+' 09:25]' in res.columns else '竞价涨幅['+cur_str+']'
+        data = res.loc[:, ['股票代码', '股票简称',竞价涨幅, '{(}竞价量['+cur_str+']{/}自由流通股['+cur_str+']{)}','自由流通市值['+yes_str+']']]
         data.columns = ["股票代码", "股票简称",'竞价涨幅','实际换手','流通市值']  # 重新命名
 
         # 格式化输出
@@ -80,7 +81,7 @@ class Strategy(object):
         if res is None:
             print('[连板高标]数据源为空')
             return
-        # print(res.columns)
+        print(res.columns)
         cur_str = datetime.strptime(cur, "%Y-%m-%d").strftime('%Y%m%d') 
         yes_str = datetime.strptime(yes, "%Y-%m-%d").strftime('%Y%m%d') 
         data = res.loc[:, ['股票代码', '股票简称','分时涨跌幅:前复权['+cur_str+' 09:25]', '{(}竞价量['+cur_str+']{/}自由流通股['+cur_str+']{)}','自由流通市值['+yes_str+']', '连续涨停天数['+ yes_str +']']]
