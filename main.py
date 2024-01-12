@@ -164,6 +164,7 @@ if __name__ == "__main__":
     print("程序开始运行")
     schedule.every().day.at('09:28:30').do(job)
     schedule.every().day.at('09:29:30').do(job)
+    schedule.every().day.at('09:30:30').do(job)
     schedule.every().day.at('14:56:00').do(selectionJob)
 
     # schedule.every().monday.do(job)
